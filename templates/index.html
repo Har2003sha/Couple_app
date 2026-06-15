@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Our Love Story — A beautiful digital gift for couples" />
+  <title>Our Love Story ❤️</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <meta name="theme-color" content="#e91e8c" />
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div class="hearts-bg" id="heartsContainer"></div>
+
+<!-- Dark/Light mode toggle -->
+<button class="mode-toggle" id="modeToggle" title="Toggle dark/light mode">🌙</button>
+
+<!-- Navigation -->
+<nav class="main-nav" id="mainNav">
+  <div class="nav-brand">❤️ Our Story</div>
+  <button class="nav-toggle" id="navToggle">☰</button>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-btn active" data-section="hero">🏠 Home</button>
+    <button class="nav-btn" data-section="counter">⏱ Counter</button>
+    <button class="nav-btn" data-section="timeline">📅 Timeline</button>
+    <button class="nav-btn" data-section="gallery">📸 Gallery</button>
+    <button class="nav-btn" data-section="memories">💝 Memories</button>
+    <button class="nav-btn" data-section="reasons">💌 Reasons</button>
+    <button class="nav-btn" data-section="letter">✉️ Letter</button>
+    <button class="nav-btn" data-section="music">🎵 Music</button>
+    <button class="nav-btn" data-section="surprise">🎉 Surprise</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="section active" id="hero">
+  <div class="hero-center">
+    <div class="couple-photo-wrap">
+      <div class="couple-photo" id="couplePhotoBox" onclick="document.getElementById('profileUpload').click()">
+        <span id="coupleEmoji">💑</span>
+        <img id="couplePhotoImg" src="" alt="Couple photo" />
+        <div class="photo-edit-hint">📷 Tap to change</div>
+      </div>
+    </div>
+    <input type="file" id="profileUpload" accept="image/*" hidden />
+    <h1 class="hero-title">Our Love Story ❤️</h1>
+    <p class="hero-sub">A beautiful journey of two hearts...</p>
+    <div class="names-row">
+      <input class="name-input" id="name1" placeholder="Your name" value="Aakash" />
+      <span class="heart-sep">❤️</span>
+      <input class="name-input" id="name2" placeholder="Partner name" value="Nikita" />
+    </div>
+    <p class="names-display" id="namesDisplay">Aakash & Nikita</p>
+    <button class="cta-btn" onclick="showSection('gallery')">See Our Gallery 📸</button>
+  </div>
+</section>
+
+<!-- ── COUNTER ── -->
+<section class="section" id="counter">
+  <h2 class="sec-title">Love Counter ⏱</h2>
+  <p class="sec-sub">Every second spent with you is precious</p>
+  <div class="counter-box">
+    <div class="date-row">
+      <label>Together since:</label>
+      <input type="date" id="startDate" value="2023-02-14" />
+    </div>
+    <p class="counter-msg" id="counterMsg">Calculating...</p>
+    <div class="counter-grid">
+      <div class="count-unit"><span class="count-num" id="cDays">0</span><span class="count-label">Days</span></div>
+      <div class="count-unit"><span class="count-num" id="cHours">00</span><span class="count-label">Hours</span></div>
+      <div class="count-unit"><span class="count-num" id="cMins">00</span><span class="count-label">Mins</span></div>
+      <div class="count-unit"><span class="count-num" id="cSecs">00</span><span class="count-label">Secs</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section class="section" id="timeline">
+  <h2 class="sec-title">Our Journey 📅</h2>
+  <p class="sec-sub">Every moment that made us, us ✨</p>
+  <div class="timeline" id="timelineContainer">
+    <div class="loading">Loading timeline...</div>
+  </div>
+  <button class="add-btn" onclick="openModal('addTimelineModal')">+ Add Event</button>
+</section>
+
+<!-- ── PHOTO GALLERY ── -->
+<section class="section" id="gallery">
+  <h2 class="sec-title">Photo Gallery 📸</h2>
+  <p class="sec-sub">Our most beautiful moments captured forever</p>
+  <div class="gallery-toolbar">
+    <button class="filter-btn active" data-tag="all">All</button>
+    <button class="filter-btn" data-tag="date">💑 Date</button>
+    <button class="filter-btn" data-tag="travel">✈️ Travel</button>
+    <button class="filter-btn" data-tag="fun">😄 Fun</button>
+    <button class="filter-btn" data-tag="special">⭐ Special</button>
+    
+    <button class="upload-btn" onclick="openModal('addPhotoModal')">+ Add Photo</button>
+  </div>
+  <div class="masonry" id="masonryGrid">
+    <div class="loading">Loading gallery...</div>
+  </div>
+</section>
+
+<!-- ── MEMORIES ── -->
+<section class="section" id="memories">
+  <h2 class="sec-title">Memory Wall 💝</h2>
+  <p class="sec-sub">Our precious moments, forever saved</p>
+  <div class="memory-grid" id="memoryGrid">
+    <div class="loading">Loading memories...</div>
+  </div>
+  <button class="add-btn" onclick="openModal('addMemoryModal')">+ Add Memory</button>
+</section>
+
+<!-- ── REASONS ── -->
+<section class="section" id="reasons">
+  <h2 class="sec-title">Why I Love You 💌</h2>
+  <p class="sec-sub">Hover over cards to reveal 🥰</p>
+  <div class="reasons-grid" id="reasonsGrid"></div>
+</section>
+
+<!-- ── LOVE LETTER ── -->
+<section class="section" id="letter">
+  <h2 class="sec-title">Love Letter ✉️</h2>
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelopeIcon" onclick="toggleLetter()">💌</div>
+    <p class="tap-hint">Tap to open your letter</p>
+    <div class="letter-box" id="letterBox">
+      <p class="letter-greeting">My Dearest,</p>
+      <p class="letter-body" id="letterBody">Every day with you feels like a beautiful dream. Your smile is my sunshine, your laugh is my favorite song. I think about you every single moment. Thank you for being my safe place, my adventure partner, and my best friend. This love is ours — timeless, true, and forever. 🌹</p>
+      <textarea id="letterEdit" placeholder="Write your own letter here..." rows="4"></textarea>
+      <button class="save-btn" onclick="saveLetter()">Save Letter 💾</button>
+      <p class="letter-sign">With all my love, forever yours ❤️</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── MUSIC ── -->
+<section class="section" id="music">
+  <h2 class="sec-title">Our Playlist 🎵</h2>
+  <p class="sec-sub">Songs that remind us of us</p>
+  <div class="music-player">
+    <div class="music-disc" id="musicDisc">🎵</div>
+    <p class="song-title" id="songTitle">Tum Hi Ho</p>
+    <p class="song-artist" id="songArtist">Arijit Singh</p>
+    <div class="music-controls">
+      <button class="ctrl-btn" onclick="prevSong()">⏮</button>
+      <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="ctrl-btn" onclick="nextSong()">⏭</button>
+    </div>
+
+    <!-- SoundCloud Link Input -->
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <input id="musicLinkInput"
+        placeholder="SoundCloud link paste karo..."
+        class="music-input" style="flex:1" />
+      <button class="save-btn" style="font-size:12px;white-space:nowrap"
+        onclick="addMusicLink()">+ Add</button>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:5px;">
+      👉 soundcloud.com pe jao → koi bhi song open karo → URL copy karo → yahan paste karo
+    </p>
+  </div>
+
+  <!-- SoundCloud Embed Player -->
+  <div id="scEmbedArea" style="margin:14px auto;max-width:400px;display:none;">
+    <iframe id="scIframe"
+      width="100%" height="100" scrolling="no" frameborder="no"
+      allow="autoplay"
+      style="border-radius:12px;">
+    </iframe>
+  </div>
+
+  <div class="playlist-list" id="playlistList"></div>
+</section>
+
+<!-- ── SURPRISE ── -->
+
+<div class="modal" id="addSurpriseModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Create Surprise ❤️</h3>
+      <button class="modal-close" onclick="closeModal('addSurpriseModal')">✕</button>
+    </div>
+
+    <input id="surpriseSender" class="modal-input" placeholder="Your Name (e.g. Aakash 💕)" />
+
+    <textarea
+      id="surpriseText"
+      class="modal-textarea"
+      placeholder="Write your surprise message..."
+      rows="4"></textarea>
+
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveSurprise()">Save Surprise 💝</button>
+      <button class="cancel-btn" onclick="closeModal('addSurpriseModal')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="surprise">
+  <h2 class="sec-title">Surprise! 🎁</h2>
+  <p class="sec-sub">Click for a special romantic message</p>
+ <div class="surprise-wrap">
+  <div class="surprise-buttons-row">
+    <button class="surprise-btn" onclick="fetchSurprise()">🎉 Click for Surprise!</button>
+    <button class="upload-btn" onclick="openModal('addSurpriseModal')">💌 Add Surprise</button>
+  </div>
+  <div class="surprise-msg" id="surpriseMsg">Click the button to receive a special surprise... 💝</div>
+</div>
+</section>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-content">
+    <div id="lbImgWrap" class="lb-img-wrap"></div>
+    <div class="lb-info">
+      <strong id="lbCaption">Caption</strong>
+      <p id="lbDesc">Description</p>
+    </div>
+    <div class="lb-controls">
+      <button class="lb-btn" onclick="lbNav(-1)">&#8592;</button>
+      <span class="lb-counter" id="lbCounter">1 / 4</span>
+      <button class="lb-btn" onclick="lbNav(1)">&#8594;</button>
+      <button class="lb-heart-btn" id="lbHeart" onclick="lbLike()">❤️ 0</button>
+      <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODALS ── -->
+
+<!-- Add Photo Modal -->
+<div class="modal" id="addPhotoModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Add New Photo 📸</h3>
+      <button class="modal-close" onclick="closeModal('addPhotoModal')">✕</button>
+    </div>
+    <img id="photoPreviewImg" class="photo-preview-img" src="" alt="Preview" style="display:none" />
+    <label class="file-label">
+      📁 Choose Photo
+      <input type="file" id="photoFileInput" accept="image/*" onchange="previewPhoto(event)" hidden />
+    </label>
+    <input id="photoCaption" placeholder="Caption (e.g. Our first date)" class="modal-input" />
+    <textarea id="photoDesc" placeholder="A sweet note about this memory..." class="modal-textarea" rows="3"></textarea>
+    <select id="photoTag" class="modal-select">
+      <option value="date">💑 Date</option>
+      <option value="travel">✈️ Travel</option>
+      <option value="fun">😄 Fun</option>
+      <option value="special">⭐ Special</option>
+    </select>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="addPhoto()">Save to Gallery 💾</button>
+      <button class="cancel-btn" onclick="closeModal('addPhotoModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Memory Modal -->
+<div class="modal" id="addMemoryModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Add New Memory 💝</h3>
+      <button class="modal-close" onclick="closeModal('addMemoryModal')">✕</button>
+    </div>
+    <div class="emoji-title-row">
+      <input id="memEmoji" placeholder="🌹" maxlength="2" class="modal-input emoji-input" />
+      <input id="memTitle" placeholder="Memory title" class="modal-input" style="flex:1" />
+    </div>
+    <textarea id="memText" placeholder="Describe this beautiful memory..." class="modal-textarea" rows="3"></textarea>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="addMemory()">Save Memory 💾</button>
+      <button class="cancel-btn" onclick="closeModal('addMemoryModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Timeline Event Modal -->
+<div class="modal" id="addTimelineModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Add Timeline Event 📅</h3>
+      <button class="modal-close" onclick="closeModal('addTimelineModal')">✕</button>
+    </div>
+    <div class="emoji-title-row">
+      <input id="tlEmoji" placeholder="⭐" maxlength="2" class="modal-input emoji-input" />
+      <input id="tlTitle" placeholder="Event title" class="modal-input" style="flex:1" />
+    </div>
+    <input id="tlDate" placeholder="Date (e.g. Feb 2023)" class="modal-input" />
+    <textarea id="tlDesc" placeholder="What happened?" class="modal-textarea" rows="2"></textarea>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="addTimelineEvent()">Add Event 💾</button>
+      <button class="cancel-btn" onclick="closeModal('addTimelineModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DELETE CONFIRM MODAL (NEW) ── -->
+<div class="modal" id="deletePhotoModal">
+  <div class="modal-box" style="max-width:340px">
+    <div class="modal-header">
+      <h3>Photo Delete Karo? 🗑️</h3>
+      <button class="modal-close" onclick="closeModal('deletePhotoModal')">✕</button>
+    </div>
+    <div class="delete-confirm-box">
+      <span class="del-icon">🗑️</span>
+      <p>Kya aap sach mein yeh photo delete karna chahte ho?<br>Yeh wapas nahi aayegi! 💔</p>
+      <div class="delete-confirm-actions">
+        <button class="del-confirm-btn" id="confirmDeleteBtn" onclick="confirmDeletePhoto()">Haan, Delete Karo</button>
+        <button class="cancel-btn" onclick="closeModal('deletePhotoModal')">Nahi, Rakhna Hai</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
